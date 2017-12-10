@@ -34,9 +34,9 @@ pipeline {
         stage('Distribute') {
             steps {
                 sh 'docker login -u hpejustin -p#1234abCD'
-                sh 'docker tag jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:${BUILD_ID}'
+                sh 'docker tag jfrog-cloud-demo:${BUILD_ID} hpejustin/jfrog-cloud-demo:${BUILD_ID}'
                 sh 'docker push hpejustin/jfrog-cloud-demo:${BUILD_ID}'
-                sh 'docker rmi jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:${BUILD_ID}'
+                sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} hpejustin/jfrog-cloud-demo:${BUILD_ID}'
                 sh 'docker logout'
             }
         }
