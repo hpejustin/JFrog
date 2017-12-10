@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Package') {
             steps {
-                sh 'echo deploy'
+                sh 'docker build -t jfrog-cloud-demo:1.0 .'
             }
         }
         stage('Deploy') {
