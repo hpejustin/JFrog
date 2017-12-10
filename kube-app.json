@@ -16,7 +16,7 @@
         "containers": [
           {
             "name": "jfrog-cloud-app",
-            "image": "hpejustin/jfrog-cloud-demo:1.0",
+            "image": "hpejustin/jfrog-cloud-demo:{tag}",
             "imagePullPolicy": "Always",
             "ports": [
               {

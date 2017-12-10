@@ -27,20 +27,22 @@ pipeline {
         }
         stage('Image') {
             steps {
-                sh 'docker build -t jfrog-cloud-demo:1.0 .'
+                sh 'echo ${BUILD_ID}'
+                sh 'docker build -t jfrog-cloud-demo:${BUILD_ID} .'
             }
         }
         stage('Distribute') {
             steps {
                 sh 'docker login -u hpejustin -p#1234abCD'
-                sh 'docker tag jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:1.0'
-                sh 'docker push hpejustin/jfrog-cloud-demo:1.0'
-                sh 'docker rmi jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:1.0'
+                sh 'docker tag jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:${BUILD_ID}'
+                sh 'docker push hpejustin/jfrog-cloud-demo:${BUILD_ID}'
+                sh 'docker rmi jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:${BUILD_ID}'
                 sh 'docker logout'
             }
         }
         stage('Deploy') {
             steps {
+                sh 'sed -i "" "s/{tag}/${BUILD_ID}/g" kube-app.json'
                 sh 'curl -X DELETE http://39.106.21.94:8080/api/v1/namespaces/default/services/jfrog-cloud-svc'
                 sh 'curl -X DELETE http://39.106.21.94:8080/apis/extensions/v1beta1/namespaces/default/deployments/jfrog-cloud-app'
                 sh 'sleep 10'
