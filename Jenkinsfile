@@ -42,7 +42,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'sed -i "" "s/{tag}/${BUILD_ID}/g" kube-app.json'
+                sh 'echo $(pwd)'
+                sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
                 sh 'curl -X DELETE http://39.106.21.94:8080/api/v1/namespaces/default/services/jfrog-cloud-svc'
                 sh 'curl -X DELETE http://39.106.21.94:8080/apis/extensions/v1beta1/namespaces/default/deployments/jfrog-cloud-app'
                 sh 'sleep 10'
