@@ -3,17 +3,19 @@ pipeline {
     stages {
         stage('SCM') { 
             steps { 
-                sh 'echo scm' 
+                git("git://github.com/hpejustin/JFrog.git")
+                sh 'echo scm finished successfully.'
             }
         }
         stage('Build') { 
             steps { 
-                sh 'echo build' 
+                sh 'mvn clean test install'
+                sh 'echo Build finished successfully.'
             }
         }
-        stage('Test'){
+        stage('Package') {
             steps {
-                sh 'echo build'
+                sh 'echo deploy'
             }
         }
         stage('Deploy') {
