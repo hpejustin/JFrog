@@ -1,0 +1,31 @@
+{
+  "apiVersion": "extensions/v1beta1",
+  "kind": "Deployment",
+  "metadata": {
+    "name": "jfrog-cloud-app"
+  },
+  "spec": {
+    "replicas": 2,
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "jfrog-cloud-app"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "name": "jfrog-cloud-app",
+            "image": "jfrog-cloud-demo:1.0",
+            "imagePullPolicy": "IfNotPresent",
+            "ports": [
+              {
+                "containerPort": 8080
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
