@@ -9,6 +9,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String hello() {
-        return "Hello JFrog!";
+        return "JFrog Artifactory!";
     }
 }
