@@ -36,7 +36,6 @@ pipeline {
                 sh 'docker tag jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:1.0'
                 sh 'docker push hpejustin/jfrog-cloud-demo:1.0'
                 sh 'docker rmi jfrog-cloud-demo:1.0 hpejustin/jfrog-cloud-demo:1.0'
-                sh 'docker rmi jfrog-cloud-demo:1.0'
                 sh 'docker logout'
             }
         }
