@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Sonar') { 
             steps { 
-                sh 'sonar scan goes here...'
+                sh 'echo sonar scan goes here...'
                 sh 'sleep 3'
             }
         }
