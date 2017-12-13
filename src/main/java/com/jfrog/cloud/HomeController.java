@@ -8,6 +8,6 @@ public class HomeController {
 
     @RequestMapping("/hello")
     public String hello() {
-        return "Welcome to Artifactory!";
+        return "Welcome to JFrog, welcome to Artifactory!";
     }
 }
