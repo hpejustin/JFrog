@@ -2,7 +2,7 @@
   "apiVersion": "extensions/v1beta1",
   "kind": "Deployment",
   "metadata": {
-    "name": "jfrog-cloud-app"
+    "name": "jfrog-cloud-app-demo"
   },
   "spec": {
     "replicas": 2,
@@ -13,11 +13,14 @@
         }
       },
       "spec": {
+        "imagePullSecrets": [{
+	  "name": "myregistrykey"
+	}],
         "containers": [
           {
             "name": "jfrog-cloud-app",
-            "image": "docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:{tag}",
-            "imagePullPolicy": "Always",
+            "image": "docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:6",
+            "imagePullPolicy": "IfNotPresent",
             "ports": [
               {
                 "containerPort": 8080
