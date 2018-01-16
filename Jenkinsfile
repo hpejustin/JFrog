@@ -37,7 +37,7 @@ pipeline {
                 sh 'docker tag jfrog-cloud-demo:${BUILD_ID} docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
                 sh 'docker push docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
                 sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
-                sh 'docker logout'
+                sh 'docker logout docker-release-local2.demo.jfrogchina.com'
             }
         }
         stage('Deploy') {
