@@ -16,7 +16,7 @@
         "containers": [
           {
             "name": "jfrog-cloud-app",
-            "image": "hpejustin/jfrog-cloud-demo:{tag}",
+            "image": "docker-release-local2.demo.jfrogchina.com/jfrog-cloud-demo:{tag}",
             "imagePullPolicy": "Always",
             "ports": [
               {
