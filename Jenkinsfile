@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('SCM') { 
             steps { 
-                git("git://github.com/hpejustin/JFrog.git")
+                git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
                 sh 'echo scm finished successfully.'
             }
         }
