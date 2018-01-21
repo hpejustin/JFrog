@@ -22,6 +22,6 @@ public class HomeControllerTests {
 
     @Test
     public void HappyPass() throws Exception {
-        this.mockMvc.perform(get("/")).andExpect(status().isOk());
+        this.mockMvc.perform(get("/hello")).andExpect(status().isOk());
     }
 }
