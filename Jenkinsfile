@@ -2,8 +2,8 @@ pipeline {
     agent any 
     stages {
         stage('SCM') { 
-            steps { 
-                git("git://github.com/hpejustin/JFrog.git")
+            steps {
+                git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'develop'])
                 sh 'echo scm finished successfully.'
             }
         }
