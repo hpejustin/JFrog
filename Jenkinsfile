@@ -16,8 +16,9 @@ pipeline {
         stage('Sonar') { 
             steps { 
                 sh 'echo sonar scan goes here...'
+                def scannerHome = tool 'sonarClient';
                 withSonarQubeEnv('sonar') {
-                    sh "sonar-runner"
+                    sh "${scannerHome}/bin/sonar-runner"
                 }
             }
         }
