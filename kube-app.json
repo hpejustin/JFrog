@@ -2,7 +2,7 @@
   "apiVersion": "extensions/v1beta1",
   "kind": "Deployment",
   "metadata": {
-    "name": "jfrog-cloud-app-demo-{tag}"
+    "name": "jfrog-cloud-app-demo"
   },
   "spec": {
     "replicas": 2,
@@ -16,7 +16,7 @@
         "containers": [
           {
             "name": "jfrog-cloud-app",
-            "image": "hpejustin/jfrog-cloud-demo:{tag}",
+            "image": "hpejustin/jfrog-cloud-demo",
             "imagePullPolicy": "IfNotPresent",
             "ports": [
               {

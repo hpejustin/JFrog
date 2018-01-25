@@ -20,13 +20,13 @@ node {
     }
     stage('Image') {
         sh 'echo ${BUILD_ID}'
-        sh 'docker build -t jfrog-cloud-demo:${BUILD_ID} .'
+        sh 'docker build -t jfrog-cloud-demo:latest .'
     }
     stage('Distribute') {
         sh 'docker login -u hpejustin -p#1234abCD'
-        sh 'docker tag jfrog-cloud-demo:${BUILD_ID} hpejustin/jfrog-cloud-demo:${BUILD_ID}'
-        sh 'docker push hpejustin/jfrog-cloud-demo:${BUILD_ID}'
-        sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} hpejustin/jfrog-cloud-demo:${BUILD_ID}'
+        sh 'docker tag jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
+        sh 'docker push hpejustin/jfrog-cloud-demo:latest'
+        sh 'docker rmi jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
         sh 'docker logout'
     }
     stage('Data Collection') {  
@@ -34,10 +34,6 @@ node {
         sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-release-local2/jfrog-cloud-demo/6?properties=sonar=done -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
     }
     stage('Deploy') {
-        sh 'echo $(pwd)'
-        sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
-        sh 'curl -X DELETE http://39.106.21.94:8080/api/v1/namespaces/default/services/jfrog-cloud-svc'
-        sh 'curl -X DELETE http://39.106.21.94:8080/apis/extensions/v1beta1/namespaces/default/deployments/jfrog-cloud-app-demo'
         sh 'sleep 10'
         sh 'curl -X POST http://39.106.21.94:8080/api/v1/namespaces/default/services -d@kube-svc.json -H "Content-Type: application/json"'
         sh 'curl -X POST http://39.106.21.94:8080/apis/extensions/v1beta1/namespaces/default/deployments -d@kube-app.json -H "Content-Type: application/json"'
