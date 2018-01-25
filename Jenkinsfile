@@ -5,7 +5,7 @@ node {
     }
     stage('UT') { 
         sh 'mvn clean test'
-        sh 'echo ut test finished successfully.'
+        sh 'echo unit test finished successfully.'
     }
     stage('Sonar') {  
         sh 'echo sonar scan goes here...'
@@ -19,11 +19,10 @@ node {
         sh 'echo Package finished successfully.'
     }
     stage('Image') {
-        sh 'echo ${BUILD_ID}'
         sh 'docker build -t jfrog-cloud-demo:latest .'
     }
     stage('Distribute') {
-        sh 'docker login -u hpejustin -p#1234abCD'
+        sh 'cat my_password.txt | docker login --username hpejustin --password-stdin'
         sh 'docker tag jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
         sh 'docker push hpejustin/jfrog-cloud-demo:latest'
         sh 'docker rmi jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
