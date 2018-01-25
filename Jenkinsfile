@@ -19,6 +19,9 @@ pipeline {
                 withSonarQubeEnv('sonar') {
                     sh "/root/tools/sonar-runner/sonar-runner-2.4/bin/sonar-runner"
                 }
+                if (waitForQualityGate().status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure"
+                }
             }
         }
         stage('Package') { 
