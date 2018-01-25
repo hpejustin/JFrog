@@ -29,6 +29,10 @@ node {
         sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} hpejustin/jfrog-cloud-demo:${BUILD_ID}'
         sh 'docker logout'
     }
+    stage('Data Collection') {  
+        sh 'echo data collection here...'
+        sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-release-local2/jfrog-cloud-demo/6?properties=sonar=done -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
+    }
     stage('Deploy') {
         sh 'echo $(pwd)'
         sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
