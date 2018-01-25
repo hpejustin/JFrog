@@ -9,14 +9,9 @@ node {
     }
     stage('Sonar') {  
         sh 'echo sonar scan goes here...'
+        def scannerHome = tool 'sonarClient';
         withSonarQubeEnv('sonar') {
-            sh "/root/tools/sonar-runner/sonar-runner-2.4/bin/sonar-runner"
-        }
-        timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-            if (qg.status != 'OK') {
-                error "Pipeline aborted due to quality gate failure: ${qg.status}"
-            }
+            sh "${scannerHome}/bin/sonar-runner"
         }
     }
     stage('Package') { 
