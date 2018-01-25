@@ -16,7 +16,9 @@ pipeline {
         stage('Sonar') { 
             steps { 
                 sh 'echo sonar scan goes here...'
-                sh 'sleep 3'
+                withSonarQubeEnv('sonar') {
+                    sh "sonar-runner"
+                }
             }
         }
         stage('Package') { 
