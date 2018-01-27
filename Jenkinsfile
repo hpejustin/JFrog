@@ -22,7 +22,7 @@ node {
         sh 'docker build -t jfrog-cloud-demo:latest .'
     }
     stage('Distribute') {
-        sh 'docker login --username hpejustin --password #1234abcD'
+        sh 'docker login --username hpejustin --password #1234abCD'
         sh 'docker tag jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
         sh 'docker push hpejustin/jfrog-cloud-demo:latest'
         sh 'docker rmi jfrog-cloud-demo:latest hpejustin/jfrog-cloud-demo:latest'
