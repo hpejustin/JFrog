@@ -40,7 +40,7 @@ node {
             sh 'sleep 10'
             sh 'kubectl -s kube-master:8080 create -f kube-svc.json'
             sh 'kubectl -s kube-master:8080 create -f kube-app.json'
-            sh 'for i in {1..300}; do echo "waiting for app starting..."; sleep 1; done;'
+            sh 'for i in {1..180}; do echo "waiting for app starting,$[180-$i] second left..."; sleep 1; done;'
             sh 'echo deploy finished successfully.'
         }
         stage('Data Collection') {  
