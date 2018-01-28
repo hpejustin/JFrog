@@ -23,11 +23,11 @@ node {
             sh 'docker build -t jfrog-cloud-demo:${BUILD_ID} .'
         }
         stage('Distribute') {
-            sh 'docker login docker-release-local.demo.jfrogchina.com -u admin -pjfrogchina'
-            sh 'docker tag jfrog-cloud-demo:${BUILD_ID} docker-release-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
-            sh 'docker push docker-release-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
-            sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} docker-release-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
-            sh 'docker logout docker-release-local.demo.jfrogchina.com'
+            sh 'docker login docker-snapshot-local.demo.jfrogchina.com -u admin -p jfrogchina'
+            sh 'docker tag jfrog-cloud-demo:${BUILD_ID} docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
+            sh 'docker push docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
+            sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
+            sh 'docker logout docker-snapshot-local.demo.jfrogchina.com'
         }
         stage('Deploy') {
             sh 'echo $(pwd)'
@@ -39,5 +39,9 @@ node {
             sh 'kubectl -s kube-master:8080 create -f kube-app.json'
             sh 'for i in {1..20}; do echo "waiting for app starting..."; sleep 1; done;'
             sh 'echo deploy finished successfully.'
+        }
+        stage('Data Collection') {  
+            sh 'echo data collection here...'
+            sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-release-local/jfrog-cloud-demo/${BUILD_ID}?properties=sonar=done&ut=paas&version=${BUILD_ID}&envType=kube -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
         }
 }
