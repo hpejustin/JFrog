@@ -2,7 +2,8 @@
   "apiVersion": "extensions/v1beta1",
   "kind": "Deployment",
   "metadata": {
-    "name": "jfrog-cloud-app-demo"
+    "name": "jfrog-cloud-app-demo",
+    "namespace": "devops"
   },
   "spec": {
     "replicas": 2,

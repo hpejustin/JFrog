@@ -28,8 +28,8 @@ node {
             sh 'docker rmi jfrog-cloud-demo:${BUILD_ID} docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:${BUILD_ID}'
         }
         stage('Preconditions') {
-            //sh 'kubectl -s kube-master:8080 delete deploy jfrog-cloud-app-demo'
-            //sh 'kubectl -s kube-master:8080 delete svc jfrog-cloud-svc'
+            sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
+            sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
             sh 'sleep 10'
         }
         stage('Deploy') {
