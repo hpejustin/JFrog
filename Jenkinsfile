@@ -30,8 +30,8 @@ node {
             sh 'docker logout docker-snapshot-local.demo.jfrogchina.com'
         }
         stage('Preconditions') {
-            sh 'kubectl -s kube-master:8080 delete deploy jfrog-cloud-app-demo'
-            sh 'kubectl -s kube-master:8080 delete svc jfrog-cloud-svc'
+            //sh 'kubectl -s kube-master:8080 delete deploy jfrog-cloud-app-demo'
+            //sh 'kubectl -s kube-master:8080 delete svc jfrog-cloud-svc'
             sh 'sleep 10'
         }
         stage('Deploy') {
