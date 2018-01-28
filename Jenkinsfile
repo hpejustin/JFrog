@@ -1,5 +1,4 @@
 node {
-    stages {
         stage('SCM') { 
             git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
             sh 'echo scm finished successfully.'
@@ -41,5 +40,4 @@ node {
             sh 'for i in {1..20}; do echo "waiting for app starting..."; sleep 1; done;'
             sh 'echo deploy finished successfully.'
         }
-    }
 }
