@@ -34,7 +34,7 @@ node {
         sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
         sh 'sleep 10'
     }
-    stage('Deploy') {
+    stage('Deploy to Kubernetes') {
         sh 'echo $(pwd)'
         sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
         sh 'sleep 10'
