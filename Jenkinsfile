@@ -33,6 +33,7 @@ node {
             sh 'echo $(pwd)'
             sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
             sh 'sleep 10'
+            sh 'kubectl create secret docker-registry artifactory-docker-registry --docker-server=docker-snapshot-local.demo.jfrogchina.com --docker-username=admin --docker-password=AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ --docker-email=fake@jfrogchina.com'
             sh 'kubectl -s kube-master:8080 create -f kube-svc.json'
             sh 'kubectl -s kube-master:8080 create -f kube-app.json'
             sh 'for i in {1..20}; do echo "waiting for app starting..."; sleep 1; done;'
