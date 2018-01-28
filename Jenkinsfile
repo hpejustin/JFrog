@@ -32,8 +32,6 @@ node {
         stage('Deploy') {
             sh 'echo $(pwd)'
             sh 'sed -i "s/{tag}/${BUILD_ID}/g" kube-app.json'
-            sh 'kubectl -s kube-master:8080 delete -f kube-svc.json'
-            sh 'kubectl -s kube-master:8080 delete -f kube-app.json'
             sh 'sleep 10'
             sh 'kubectl -s kube-master:8080 create -f kube-svc.json'
             sh 'kubectl -s kube-master:8080 create -f kube-app.json'
@@ -42,6 +40,6 @@ node {
         }
         stage('Data Collection') {  
             sh 'echo data collection here...'
-            sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-release-local/jfrog-cloud-demo/${BUILD_ID}?properties=sonar=done&ut=paas&version=${BUILD_ID}&envType=kube -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
+            sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-snapshot-local/jfrog-cloud-demo/${BUILD_ID}?properties=sonar=done -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
         }
 }
