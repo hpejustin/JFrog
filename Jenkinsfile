@@ -41,6 +41,6 @@ node {
         }
         stage('Data Collection') {  
             sh 'echo data collection here...'
-            sh 'curl -X PUT http://demo.jfrogchina.com/artifactory/api/storage/docker-snapshot-local/jfrog-cloud-demo/${BUILD_ID}?properties=sonar=done -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
+            sh 'curl -X PUT \"http://demo.jfrogchina.com/artifactory/api/storage/docker-snapshot-local/jfrog-cloud-demo/${BUILD_ID}?properties=ut=paas;sonar=done;version=${BUILD_ID};envType=kube\" -uadmin:AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ'
         }
 }
