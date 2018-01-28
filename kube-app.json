@@ -2,7 +2,7 @@
   "apiVersion": "extensions/v1beta1",
   "kind": "Deployment",
   "metadata": {
-    "name": "jfrog-cloud-app-demo-{tag}"
+    "name": "jfrog-cloud-app-demo"
   },
   "spec": {
     "replicas": 2,
