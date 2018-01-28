@@ -14,6 +14,9 @@
         }
       },
       "spec": {
+        "imagePullSecrets":[{
+          "name": "artifactory-docker-registry"
+        }],
         "containers": [
           {
             "name": "jfrog-cloud-app",
