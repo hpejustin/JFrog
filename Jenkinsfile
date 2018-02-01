@@ -3,9 +3,7 @@ node {
     def artiServer
     def rtMaven
     def buildInfo
-    stage('SCM') {
-        // Checkout source code
-        git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
+    stage('Prepare') {
         artiServer = Artifactory.server('artiha-demo')
         buildInfo = Artifactory.newBuildInfo()
         buildInfo.env.capture = true
@@ -15,6 +13,14 @@ node {
         rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: artiServer
         // Specific dependency resolve repo
         rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: artiServer
+
+        sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
+        sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
+        sh 'sleep 10'
+    }
+    stage('SCM') {
+        // Checkout source code
+        git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
     }
     stage('Sonar') {
         sh 'echo sonar scan goes here...'
@@ -32,11 +38,6 @@ node {
         def artDocker= Artifactory.docker('admin', 'AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ')
         artDocker.push(tagName, 'docker-snapshot-local', buildInfo)
         artiServer.publishBuildInfo buildInfo
-    }
-    stage('Preconditions') {
-        sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
-        sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
-        sh 'sleep 10'
     }
     stage('Deploy to Kubernetes') {
         sh 'echo $(pwd)'
