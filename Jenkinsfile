@@ -10,9 +10,9 @@ node {
         rtMaven = Artifactory.newMavenBuild()
         rtMaven.tool = "maven"
         // Specific target repo
-        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: artiServer
+        rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: artiServer
         // Specific dependency resolve repo
-        rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: artiServer
+        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: artiServer
 
         sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
         sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
@@ -33,7 +33,7 @@ node {
         rtMaven.run pom: 'pom.xml', goals: 'clean test install', buildInfo: buildInfo
     }
     stage('Image') {
-        def tagName='docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:' + env.BUILD_NUMBER
+        def tagName = 'docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:' + env.BUILD_NUMBER
         docker.build(tagName)
         def artDocker= Artifactory.docker('admin', 'AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ')
         artDocker.push(tagName, 'docker-snapshot-local', buildInfo)
