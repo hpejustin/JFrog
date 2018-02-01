@@ -25,7 +25,6 @@ node {
     }
     stage('Build') {
         rtMaven.run pom: 'pom.xml', goals: 'clean test install', buildInfo: 
-        artiServer.publishBuildInfo buildInfo
     }
     stage('Image') {
         def tagName='docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:' + env.BUILD_NUMBER
@@ -34,6 +33,7 @@ node {
     stage('Distribute') {
         def artDocker= Artifactory.docker('admin', 'AKCp2WXCWmSmLjLc5VKVYuSeumtarKV7TioZfboRAEwC1tqKAUvbniFJqp7xLfCyvJ7GxWuJZ')
         artDocker.push(tagName, 'docker-snapshot-local', buildInfo)
+        artiServer.publishBuildInfo buildInfo
     }
     stage('Preconditions') {
         sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
