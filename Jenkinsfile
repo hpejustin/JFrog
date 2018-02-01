@@ -7,6 +7,8 @@ node {
         // Checkout source code
         git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
         artiServer = Artifactory.server('artiha-demo')
+        buildInfo = Artifactory.newBuildInfo()
+        buildInfo.env.capture = true
         rtMaven = Artifactory.newMavenBuild()
         rtMaven.tool = "maven"
         // Specific target repo
@@ -22,7 +24,8 @@ node {
         }
     }
     stage('Build') {
-        buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean test install'
+        rtMaven.run pom: 'pom.xml', goals: 'clean test install', buildInfo: 
+        artiServer.publishBuildInfo buildInfo
     }
     stage('Image') {
         sh 'echo ${BUILD_ID}'
