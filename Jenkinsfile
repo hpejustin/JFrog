@@ -24,7 +24,7 @@ node {
         }
     }
     stage('Build') {
-        rtMaven.run pom: 'pom.xml', goals: 'clean test install', buildInfo: 
+        rtMaven.run pom: 'pom.xml', goals: 'clean test install', buildInfo: buildInfo
     }
     stage('Image') {
         def tagName='docker-snapshot-local.demo.jfrogchina.com/jfrog-cloud-demo:' + env.BUILD_NUMBER
