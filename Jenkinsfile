@@ -50,7 +50,7 @@ node {
     }
     stage('Upload Metadata') {
         sh 'echo data collection here...'
-        sh 'curl -X PUT \"http://demo.jfrogchina.com/artifactory/api/storage/docker-snapshot-local/jfrog-cloud-demo/${BUILD_ID}?properties=build.name=Cloud-Native-Demo-01;build.version=${BUILD_ID};ut=paas;ut.passRate=1;sonar=done;SonarUrl=http://47.93.114.82:9000/dashboard/index/my:project;envType=kube;env.namespace=devops\" -u admin:jfrogchina'
+        sh 'curl -X PUT \"http://demo.jfrogchina.com/artifactory/api/storage/docker-snapshot-local/jfrog-cloud-demo/${BUILD_ID}?properties=build.name=Cloud-Native-Demo-01;build.version=${BUILD_ID};ut=paas;ut.passRate=1;sonar=done;envType=kube;env.namespace=devops\" -u admin:jfrogchina'
     }
     stage('Pong') {
         sh 'echo pipeline ended, please access http://39.106.21.94:8081/hello'
