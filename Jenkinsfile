@@ -1,11 +1,18 @@
 node {
+    def mvnHome
+    def artiServer
+    def rtMaven
+    def buildInfo
     stage('SCM') {
+        // Checkout source code
         git([url: 'https://github.com/hpejustin/JFrog.git', branch: 'master'])
-        sh 'echo scm finished successfully.'
-    }
-    stage('UT') {
-        sh 'mvn clean test'
-        sh 'echo ut test finished successfully.'
+        artiServer = Artifactory.server('artiha-demo')
+        rtMaven = Artifactory.newMavenBuild()
+        rtMaven.tool = "maven"
+        // Specific target repo
+        rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: artiServer
+        // Specific dependency resolve repo
+        rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: artiServer
     }
     stage('Sonar') {
         sh 'echo sonar scan goes here...'
@@ -14,9 +21,8 @@ node {
             sh "${scannerHome}/bin/sonar-runner"
         }
     }
-    stage('Package') {
-        sh 'mvn clean install'
-        sh 'echo Package finished successfully.'
+    stage('Build') {
+        buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean test install'
     }
     stage('Image') {
         sh 'echo ${BUILD_ID}'
