@@ -14,8 +14,8 @@ node {
         // Specific dependency resolve repo
         rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: artiServer
 
-        sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
-        sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
+        // sh 'kubectl -s kube-master:8080 --namespace=devops delete deploy --all'
+        // sh 'kubectl -s kube-master:8080 --namespace=devops delete svc --all'
         sh 'sleep 10'
     }
     stage('SCM') {
